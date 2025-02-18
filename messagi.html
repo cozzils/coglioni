@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messaggi & Pensieri | Il Nostro Gruppo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/messagi.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Il Nostro Gruppo</div>
+        <ul class="nav-links">
+          <li><a href="Home.html">Home</a></li>
+          <li><a href="eventi.html">Ricordi</a></li>
+          <li><a href="messagi.html">Messaggi</a></li>
+          <li><a href="eventi-futuri.html">Proggami</a></li>
+          <li><a href="contanti.html">Contatti</a></li>
+        </ul>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Messaggi & Pensieri</h1>
+       <p>Uno spazio dove condividere emozioni, ricordi e riflessioni con tutto il gruppo,<br>
+              aggiungi il tuo ricordo scrivendolo qui sotto             
+        </p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div id="alert-container"></div>
+    
+    <div class="message-form">
+      <h3>Condividi un pensiero</h3>
+      <form id="new-message-form">
+        <div class="form-group">
+          <label for="author-name">Il tuo nome</label>
+          <input type="text" id="author-name" class="form-control" required minlength="2" maxlength="50">
+        </div>
+        <div class="form-group">
+          <label for="message-title">Titolo del messaggio</label>
+          <input type="text" id="message-title" class="form-control" required minlength="3" maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="message-content">Il tuo messaggio</label>
+          <textarea id="message-content" class="form-control" rows="4" required maxlength="1000"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Categoria del messaggio</label>
+          <div class="category-options">
+            <div class="category-option">
+              <input type="radio" name="category" id="amicizia" value="amicizia" class="category-input" required>
+              <label for="amicizia" class="category-label">Amicizia</label>
+            </div>
+            <div class="category-option">
+              <input type="radio" name="category" id="conoscenza" value="conoscenza" class="category-input">
+              <label for="conoscenza" class="category-label">Conoscenza</label>
+            </div>
+            <div class="category-option">
+              <input type="radio" name="category" id="motivazione" value="motivazione" class="category-input">
+              <label for="motivazione" class="category-label">Motivazione</label>
+            </div>
+            <div class="category-option">
+              <input type="radio" name="category" id="racconto" value="racconto" class="category-input">
+              <label for="racconto" class="category-label">Racconto</label>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn">Pubblica messaggio</button>
+      </form>
+    </div>
+
+    <div class="messages-section">
+      <div id="messages-container"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <ul class="social-links">
+        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        <li><a href="#https://chat.whatsapp.com/CDFvBRz1irW34Q8GF8unrN "><i class="fab fa-whatsapp"></i></a></li>
+      </ul>
+      <p>&copy; 2025 Il Nostro Gruppo | Tutti i diritti riservati</p>
+    </div>
+  </footer>
+
+  <script>
+    // Funzione per inviare email
+    function sendEmailNotification(message) {
+        const email = "cozziluca1@gmail.com";
+        const subject = "Nuovo Messaggio Pubblicato";
+        const body = `Autore: ${message.author}\nTitolo: ${message.title}\nCategoria: ${message.category}\nMessaggio: ${message.content}`;
+        window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    // Funzione per aggiungere un nuovo messaggio
+    document.getElementById('new-message-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const newMessage = {
+            author: document.getElementById('author-name').value,
+            title: document.getElementById('message-title').value,
+            content: document.getElementById('message-content').value,
+            category: document.querySelector('input[name="category"]:checked').value
+        };
+
+        sendEmailNotification(newMessage);
+    });
+
+    // Funzione per creare particelle
+    function createParticle(x, y) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      document.body.appendChild(particle);
+      particle.style.left = `${x}px`;
+      particle.style.top = `${y}px`;
+
+      setTimeout(() => {
+        particle.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
+        particle.style.opacity = '0';
+      }, 0);
+
+      setTimeout(() => {
+        particle.remove();
+      }, 1000);
+    }
+
+    // Aggiungi particelle al movimento del mouse
+    document.addEventListener('mousemove', (e) => {
+      createParticle(e.clientX, e.clientY);
+    });
+
+  </script>
+</body>
+</html>
